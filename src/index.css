@@ -1,13 +1,17 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* vendor */
+@import url(./vendor/normalize.css);
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* fonts */
+@import url(./fonts/Inter-3.13/Inter_Web/inter.css);
+
+/* block */
+@import url(./block/page/page.css);
+@import url(./block/popup/popup.css);
+@import url(./block/fieldset/fieldset.css);
+@import url(./block/header/header.css);
+@import url(./block/profile/profile.css);
+@import url(./block/elements/elements.css);
+@import url(./block/element/element.css);
+@import url(./block/footer/footer.css);
+
+
