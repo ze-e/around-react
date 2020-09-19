@@ -1,40 +1,17 @@
 import React from 'react';
 import profileImg from '../images/profile-img.png';
-import PopupWithForm from './PopupWithForm';
 
 function Main(props) {
 
-  function handleEditProfileClick(){
-    setIsEditProfilePopupOpen(true);
-  }
-
-  function handleAddPlaceClick(){
-    setIsAddPlacePopupOpen(true);
-  }
-
-  function handleEditAvatarClick(){
-    setisEditAvatarPopupOpen(true);
-  }
-
-  function closeAllPopups(){
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setisEditAvatarPopupOpen(false);
-  }
-
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
-
   React.useEffect(()=>{
-    document.querySelector('.profile__edit-button').addEventListener('click', handleEditProfileClick);
-    document.querySelector('.profile__add-button').addEventListener('click', handleAddPlaceClick);
-    document.querySelector('.profile__image-container').addEventListener('click', handleEditAvatarClick);
+    document.querySelector('.profile__edit-button').addEventListener('click', props.onEditProfile);
+    document.querySelector('.profile__add-button').addEventListener('click', props.onAddPlace);
+    document.querySelector('.profile__image-container').addEventListener('click', props.onEditAvatar);
 
     return()=>{
-      document.querySelector('.profile__edit-button').removeEventListener('click', handleEditProfileClick);
-      document.querySelector('.profile__add-button').removeEventListener('click', handleAddPlaceClick);
-      document.querySelector('.profile__image-container').removeEventListener('click', handleEditAvatarClick);
+      document.querySelector('.profile__edit-button').removeEventListener('click', props.onEditProfile);
+      document.querySelector('.profile__add-button').removeEventListener('click', props.onAddPlace);
+      document.querySelector('.profile__image-container').removeEventListener('click', props.onEditAvatar);
     }
 
   })
@@ -70,11 +47,6 @@ function Main(props) {
     </div>
   </template>
   </section>
-
-  <PopupWithForm name="edit-profile" title="Edit Profile" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}/>
-  <PopupWithForm name="add-card" title="New Place" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}/>
-  <PopupWithForm name="edit-avatar" title="Change profile picture" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}/>
-
   </>
 )}
 
