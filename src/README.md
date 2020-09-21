@@ -1,6 +1,6 @@
 # Project 4: Around The U.S.
 
-* [Link to the project on github](/)
+* [Link to the project on github](https://github.com/ze-e/around-react)
 ### Overview
 
 * React
@@ -10,7 +10,7 @@
 **React**
 This repo is a port of the original vanilla js version of the project, ported to React.
 You can view the original here:
-*[Link to original](/)
+*[Link to original](https://github.com/ze-e/web_project_4)
 
 **Figma**
 
