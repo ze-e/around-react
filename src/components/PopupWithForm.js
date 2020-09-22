@@ -1,14 +1,10 @@
 import React from 'react';
 
 function PopupWithForm(props) {
-  React.useEffect(()=>{
-    const popupElem = document.querySelector(`.popup_type_${props.name}`);
-    props.isOpen ? popupElem.classList.add('popup_state_opened') : popupElem.classList.remove('popup_state_opened');
-  })
 
   return (
   
-  <section className={`popup popup_type_${props.name}`}>
+  <section className={`popup popup_type_${props.name} ${props.isOpen && 'popup_state_opened'}`}>
     <fieldset className="fieldset">
     <div className="popup__container">
       <form className={`popup__form popup__form_type_${props.name}`}>

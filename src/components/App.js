@@ -8,6 +8,11 @@ import PopupWithImage from './PopupWithImage';
 
 function App() {
 
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard , setselectedCard ] = React.useState();
+
   function handleEditProfileClick(){
     setIsEditProfilePopupOpen(true);
   }
@@ -31,16 +36,8 @@ function App() {
     setselectedCard();
   }
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard , setselectedCard ] = React.useState();
-
-
-
   return (
-<div className="App">
-<div className="page">
+<div className="App page">
 
   <Header />
   <Main 
@@ -73,7 +70,6 @@ function App() {
     onClose={closeAllPopups}/>
 
 </div>     
-</div>
   );
 }
 

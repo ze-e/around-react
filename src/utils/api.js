@@ -19,9 +19,6 @@ class Api{
       }
       return Promise.reject(`Error: ${res.statusText}`);
     })
-    .catch((err) => {
-      console.log(err);
-    });
   }
   
   getCards(){
@@ -36,9 +33,6 @@ class Api{
       }
       return Promise.reject(`Error: ${res.statusText}`);
     })
-    .catch((err) => {
-      console.log(err);
-      });
   }
 
   editProfile({name, about}){
@@ -59,9 +53,6 @@ class Api{
       }
       return Promise.reject(`Error: ${res.statusText}`);
     })
-    .catch((err) => {
-      console.log(err);
-      })
   }
 
   editAvatar({link}){
@@ -81,9 +72,6 @@ class Api{
       }
       return Promise.reject(`editAvatar Error: ${res.statusText}`);
     })
-    .catch((err) => {
-      console.log(err);
-      })
   }
 
   addCard({name, link}){
@@ -104,9 +92,6 @@ class Api{
       }
       return Promise.reject(`Error: ${res.statusText}`);
     })
-    .catch((err) => {
-      console.log(err);
-      })
   }
 
   deleteCard({cardId}){
@@ -123,9 +108,6 @@ class Api{
       }
       return Promise.reject(`Error: ${res.statusText}`);
     })
-    .catch((err) => {
-      console.log(err);
-      });
   }
 
   addLike({cardId}){
@@ -142,9 +124,7 @@ class Api{
       }
       return Promise.reject(`editLikes Error: ${res.statusText}`);
     })
-    .catch((err) => {
-      console.log(err);
-      });
+
   }
 
   deleteLike({cardId}){
@@ -161,9 +141,6 @@ class Api{
       }
       return Promise.reject(`editLikes Error: ${res.statusText}`);
     })
-    .catch((err) => {
-      console.log(err);
-      });
   }
 }
 

@@ -4,22 +4,10 @@ import {api} from '../utils/api.js';
 
 function Main(props) {
 
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setUserDescription] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
+  const [userAvatar, setUserAvatar] = React.useState('#');
   const [cards, setCards] = React.useState([]);
-
-  React.useEffect(()=>{
-    document.querySelector('.profile__edit-button').addEventListener('click', props.onEditProfile);
-    document.querySelector('.profile__add-button').addEventListener('click', props.onAddPlace);
-    document.querySelector('.profile__image-container').addEventListener('click', props.onEditAvatar);
-
-    return()=>{
-      document.querySelector('.profile__edit-button').removeEventListener('click', props.onEditProfile);
-      document.querySelector('.profile__add-button').removeEventListener('click', props.onAddPlace);
-      document.querySelector('.profile__image-container').removeEventListener('click', props.onEditAvatar);
-    }
-  })
 
   React.useEffect(()=>{
     api.getUser().then((data) => {  
@@ -27,28 +15,31 @@ function Main(props) {
       setUserName(name);
       setUserDescription(description);
       setUserAvatar(avatar);
-    })
-  })
 
-  React.useEffect(()=>{
-    api.getCards().then((data) => {  
-      setCards(data)
-    })
+      //after getting the user, load the cards
+      api.getCards().then((data) => {  
+        setCards(data)
+      }).catch((err) => { 
+          console.log(err);  
+        });
+    }).catch((err) => { 
+        console.log(err);  
+      });
   })
   
   return (
   <>
   <section className="profile">
     <div className="profile__image-container">
-      <div className="profile__image-overlay"></div>
+      <div className="profile__image-overlay" onClick={props.onEditAvatar}></div>
       <img className="profile__image" src={userAvatar} alt="profile-img"/>
     </div>
     <div className="profile__info">
   <h1 className="profile__name">{userName}</h1>
-      <button className="profile__edit-button" aria-label="edit profile"></button>       
+      <button className="profile__edit-button" onClick={props.onEditProfile} aria-label="edit profile"></button>       
   <p className="profile__description">{userDescription}</p>     
     </div>
-    <button className="profile__add-button"></button>
+    <button className="profile__add-button" onClick={props.onAddPlace}></button>
   </section>
 
   <section className="elements">
