@@ -1,14 +1,22 @@
 import React from 'react';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
+
 
 function Card(props){
+  const currentUser = React.useContext(CurrentUserContext);
 
   function handleClick() {
     props.onCardClick(props.card);
   } 
 
+  //control delete button visibility
+  const isOwn = card.owner._id === currentUser._id;
+  const cardDeleteButtonClassName = (
+    `element__delete-button ${isOwn && 'element__delete-button_visibility_visible'}`
+  ); 
   return(
   <>
-  <div className="element__delete-button"></div>
+  <div className={cardDeleteButtonClassName}></div>
   <img className="element__image" src={props.card.link} onClick={handleClick}/>
   <div className="element__text">
     <h2 className="element__title">{props.card.name}</h2>

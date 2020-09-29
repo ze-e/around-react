@@ -11,9 +11,14 @@
   right: 15px;
   position: absolute;
   z-index: 1;
+  visibility: hidden;
 }
 
 .element__delete-button:hover{
   opacity: 0.5;
   cursor: pointer;
+}
+
+.element__delete-button.element__delete-button_visibility_visible{
+  visibility: visible;
 }
