@@ -1,8 +1,8 @@
 import React from 'react';
 import Card from './Card.js';
-import {api} from '../utils/api.js';
 
 function Main(props) {
+  const currentUser = React.useContext(CurrentUserContext);
 
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
@@ -10,21 +10,17 @@ function Main(props) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(()=>{
-    api.getUser().then((data) => {  
-      const [name, description, avatar] = [data.name, data.about, data.avatar];
-      setUserName(name);
-      setUserDescription(description);
-      setUserAvatar(avatar);
+      setUserName(currentUser.name);
+      setUserDescription(currentUser.description);
+      setUserAvatar(currentUser.avatar);
 
-      //after getting the user, load the cards
+      //load the cards
       api.getCards().then((data) => {  
         setCards(data)
       }).catch((err) => { 
           console.log(err);  
         });
-    }).catch((err) => { 
-        console.log(err);  
-      });
+
   })
   
   return (
