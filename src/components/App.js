@@ -6,7 +6,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import PopupWithImage from './PopupWithImage';
 //context
-import CurrentUserContext from '../contexts/CurrentUserContext'
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
 import {api} from '../utils/api';
 
@@ -44,10 +44,10 @@ function App() {
   }
 
   React.useEffect(()=>{
-    api.getUser().then(data){
+    api.getUser().then((data)=>{
       setcurrentUser(data);
-    }
   });
+})
 
   return (
 <div className="App page">
