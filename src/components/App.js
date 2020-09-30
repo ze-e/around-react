@@ -5,6 +5,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import PopupWithImage from './PopupWithImage';
+import EditProfilePopup from './EditProfilePopUp';
 //context
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
@@ -17,8 +18,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setselectedCard ] = React.useState({link:'#'});
-  const [currentUser, setcurrentUser  ] = React.useState({});
+  const [selectedCard, setselectedCard] = React.useState({link:'#'});
+  const [currentUser, setcurrentUser] = React.useState({});
 
   function handleEditProfileClick(){
     setIsEditProfilePopupOpen(true);
@@ -61,19 +62,11 @@ function App() {
     card = {selectedCard}
   />
   <Footer />
-  <PopupWithForm 
-    name="edit-profile" 
-    title="Edit Profile" 
-    children={
-      <>
-        <input className="popup__input popup__input-name" id="name-input" type="text" name="name" placeholder="Jaques Costeau" minLength="2" maxLength="40"/>
-        <span className="popup__input-error" id="name-input-error"></span>
-        <input className="popup__input popup__input-description" id="description-input" type="text" name="description" placeholder="Explorer" required minLength="2" maxLength="200" />
-        <span className="popup__input-error" id="description-input-error"></span>
-      </>
-    }
+
+  <EditProfilePopUp 
     isOpen={isEditProfilePopupOpen} 
-    onClose={closeAllPopups}/>
+    onClose={closeAllPopups}
+  />
 
   <PopupWithForm 
     name="add-card" 
