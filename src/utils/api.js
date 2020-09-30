@@ -110,7 +110,11 @@ class Api{
     })
   }
 
-  addLike({cardId}){
+  changeLikeCardStatus(cardId, liked){
+    return liked ? this.deleteLike(cardId) : this.addLike(cardId);
+  }
+
+  addLike(cardId){
     return fetch(`${this.baseUrl}/cards/likes/${cardId}`,{
       method: "PUT",
       headers: {
@@ -127,7 +131,7 @@ class Api{
 
   }
 
-  deleteLike({cardId}){
+  deleteLike(cardId){
     return fetch(`${this.baseUrl}/cards/likes/${cardId}`,{
       method: "DELETE",
       headers: {
