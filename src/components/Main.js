@@ -22,8 +22,7 @@ function Main(props) {
       }).catch((err) => { 
           console.log(err);  
         });
-
-  },[currentUser])
+  })
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
@@ -37,6 +36,18 @@ function Main(props) {
       setCards(newCards);
     });
   } 
+
+  function handleCardDelete(card){
+    //delete the card
+    api.deleteCard(card).then((data) => { 
+      const newCards = cards.filter((c)=>{
+        return c._id !== data._id;
+      }); 
+      setCards(newCards);
+    }).catch((err) => { 
+        console.log(err);  
+      });
+  }
   
   return (
   <>
@@ -56,7 +67,7 @@ function Main(props) {
   <section className="elements">
     {cards.map(card => (
       <div className="element" key={card._id}>
-        <Card card={card} onCardClick = {props.onCardClick} onCardLike={handleCardLike}/>
+        <Card card={card} onCardClick = {props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
       </div>
     ))}
   </section>

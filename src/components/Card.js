@@ -13,6 +13,10 @@ function Card(props){
     props.onCardLike(props.card);
   } 
 
+  function handleDelete() {
+    props.onCardDelete(props.card);
+  } 
+
   //control delete button visibility
   const isOwn = props.card.owner._id === currentUser._id;
   const cardDeleteButtonClassName = (
@@ -25,7 +29,7 @@ function Card(props){
 
   return(
   <>
-  <div className={cardDeleteButtonClassName}></div>
+  <div className={cardDeleteButtonClassName} onClick={handleDelete} ></div>
   <img className="element__image" src={props.card.link} onClick={handleClick}/>
   <div className="element__text">
     <h2 className="element__title">{props.card.name}</h2>

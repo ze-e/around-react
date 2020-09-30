@@ -94,7 +94,7 @@ class Api{
     })
   }
 
-  deleteCard({cardId}){
+  deleteCard(cardId){
     return fetch(`${this.baseUrl}/cards/${cardId}`,{
       method: "DELETE",
       headers: {
