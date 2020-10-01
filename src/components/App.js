@@ -13,8 +13,6 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
 import {api} from '../utils/api';
 
-
-
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -22,6 +20,11 @@ function App() {
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
   const [currentUser, setcurrentUser] = React.useState({});
+
+  //
+  const [cards, setCards] = React.useState([]);
+
+
 
   function handleEditProfileClick(){
     setIsEditProfilePopupOpen(true);
@@ -64,14 +67,58 @@ function App() {
     closeAllPopups();
   }
 
-
+//load user and cards
   React.useEffect(()=>{
+    //get user
     api.getUser().then((data)=>{
       setcurrentUser(data);
+
+      //get cards
+      api.getCards().then((data) => {  
+        setCards(data)
+      }).catch((err) => { 
+          console.log(err);  
+        });
   }).catch((err) => { 
     console.log(err);  
   });
 })
+
+//
+function handleCardLike(card) {
+  // Check one more time if this card was already liked
+  const isLiked = card.likes.some(i => i._id === currentUser._id);
+  
+  // Send a request to the API and getting the updated card data
+  api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
+      // Create a new array based on the existing one and putting a new card into it
+    const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+    // Update the state
+    setCards(newCards);
+  });
+} 
+
+function handleCardDelete(card){
+  //delete the card
+  api.deleteCard(card).then((data) => { 
+    const newCards = cards.filter((c)=>{
+      return c._id !== data._id;
+    }); 
+    setCards(newCards);
+  }).catch((err) => { 
+      console.log(err);  
+    });
+}
+
+React.useEffect(()=>{
+    //load the cards
+    api.getCards().then((data) => {  
+      setCards(data)
+    }).catch((err) => { 
+        console.log(err);  
+      });
+  })
+
 
   return (
 <div className="App page">
@@ -83,6 +130,11 @@ function App() {
     onEditAvatar = {handleEditAvatarClick}
     onCardClick = {handleCardClick}
     card = {selectedCard}
+
+    //
+    cards = {cards}
+    onCardLike = {handleCardLike}
+    onCardDelete = {handleCardDelete}
   />
   <Footer />
 
