@@ -3,11 +3,10 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import PopupWithImage from './PopupWithImage';
 import EditProfilePopUp from './EditProfilePopUp';
 import EditAvatarPopUp from './EditAvatarPopup';
-
+import AddPlacePopup from './AddPlacePopup';
 //context
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
@@ -20,8 +19,6 @@ function App() {
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
   const [currentUser, setcurrentUser] = React.useState({});
-
-  //
   const [cards, setCards] = React.useState([]);
 
 
@@ -67,22 +64,21 @@ function App() {
     closeAllPopups();
   }
 
-//load user and cards
-  React.useEffect(()=>{
     //get user
-    api.getUser().then((data)=>{
-      setcurrentUser(data);
-
-      //get cards
-      api.getCards().then((data) => {  
-        setCards(data)
+    React.useEffect(()=>{
+      api.getUser().then((data) => {  
+        setcurrentUser(data)
       }).catch((err) => { 
-          console.log(err);  
-        });
-  }).catch((err) => { 
-    console.log(err);  
-  });
-})
+          console.log(err)})
+    },[])
+
+  //get cards
+  React.useEffect(()=>{
+    api.getCards().then((data) => {  
+      setCards(data)
+    }).catch((err) => { 
+        console.log(err)})
+  },[])   
 
 //
 function handleCardLike(card) {
@@ -110,15 +106,6 @@ function handleCardDelete(card){
     });
 }
 
-React.useEffect(()=>{
-    //load the cards
-    api.getCards().then((data) => {  
-      setCards(data)
-    }).catch((err) => { 
-        console.log(err);  
-      });
-  })
-
 
   return (
 <div className="App page">
@@ -130,8 +117,6 @@ React.useEffect(()=>{
     onEditAvatar = {handleEditAvatarClick}
     onCardClick = {handleCardClick}
     card = {selectedCard}
-
-    //
     cards = {cards}
     onCardLike = {handleCardLike}
     onCardDelete = {handleCardDelete}
@@ -144,21 +129,11 @@ React.useEffect(()=>{
     onUpdateUser={handleUpdateUser}
   />
 
-  <PopupWithForm 
-    name="add-card" 
-    title="New Place" 
-    children={
-    <>
-      <input className="popup__input popup__input-card-name" id="card-name-input" type="text" name="name" placeholder="Title" required minLength="1" maxLength="30" />
-      <span className="popup__input-error" id="card-name-input-error"></span>
-      
-      <input className="popup__input popup__input-card-url" id="url-input" type="url" name="link" placeholder="Image URL" required />
-      <span className="popup__input-error" id="url-input-error"></span>
-    </>
-
-    }
+  <AddPlacePopup 
     isOpen={isAddPlacePopupOpen} 
-    onClose={closeAllPopups}/>
+    onClose={closeAllPopups}
+    
+    />
 
   <EditAvatarPopUp 
     isOpen={isEditAvatarPopupOpen} 
