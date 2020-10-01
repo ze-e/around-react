@@ -8,13 +8,12 @@ function EditProfilePopUp(props){
   // Subscription to the context
 const currentUser = React.useContext(CurrentUserContext);
 
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value);
-  }
+function handleChange(e) {
+  const targetName = e.target.name;
+  const targetValue = e.target.value;
+  targetName === 'name' && setName(targetValue);
+  targetName === 'description'&& setDescription(targetValue);
+}
 
   function handleSubmit(e) {
     // Prevent the browser from navigating to the form address
@@ -30,9 +29,9 @@ const currentUser = React.useContext(CurrentUserContext);
       <form className={`popup__form popup__form_type_edit-profile`} onSubmit={handleSubmit}>
         <button className={`popup__close popup__close_type_edit-profile`} type="button" onClick={props.onClose}></button>  
         <h4 className="popup__title">Edit Profile</h4>
-        <input className="popup__input popup__input-name" id="name-input" type="text" name="name" placeholder={currentUser.name} minLength="2" maxLength="40" value={name} onChange={handleNameChange}/>
+        <input className="popup__input popup__input-name" id="name-input" type="text" name="name" placeholder={currentUser.name} minLength="2" maxLength="40" value={name} onChange={handleChange}/>
           <span className="popup__input-error" id="name-input-error"></span>
-          <input className="popup__input popup__input-description" id="description-input" type="text" name="description" placeholder={currentUser.about} required minLength="2" maxLength="200" value={description} onChange={handleDescriptionChange}/>
+          <input className="popup__input popup__input-description" id="description-input" type="text" name="description" placeholder={currentUser.about} required minLength="2" maxLength="200" value={description} onChange={handleChange}/>
           <span className="popup__input-error" id="description-input-error"></span>
         <button className={`popup__submit popup__edit-profile-submit`} type="submit">Save</button>
       </form>

@@ -106,6 +106,15 @@ function handleCardDelete(card){
     });
 }
 
+function handleAddPlaceSubmit(name, link){
+  api.addCard(name,link).then((newCard) => { 
+    setCards([...cards, newCard]); 
+  }).catch((err) => { 
+      console.log(err);  
+    });
+
+  closeAllPopups();
+}
 
   return (
 <div className="App page">
@@ -132,7 +141,7 @@ function handleCardDelete(card){
   <AddPlacePopup 
     isOpen={isAddPlacePopupOpen} 
     onClose={closeAllPopups}
-    
+    onAddPlace={handleAddPlaceSubmit}
     />
 
   <EditAvatarPopUp 
