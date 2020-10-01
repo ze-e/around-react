@@ -6,6 +6,8 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import PopupWithImage from './PopupWithImage';
 import EditProfilePopUp from './EditProfilePopUp';
+import EditAvatarPopUp from './EditAvatarPopup';
+
 //context
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
@@ -46,6 +48,15 @@ function App() {
 
   function handleUpdateUser(name, about){
     api.editProfile(name, about).then((data)=>{
+      setcurrentUser(data);
+    }).catch((err) => { 
+      console.log(err);  
+    });
+    closeAllPopups();
+  }
+
+  function handleUpdateAvatar({link}){
+    api.editAvatar(link).then((data)=>{
       setcurrentUser(data);
     }).catch((err) => { 
       console.log(err);  
@@ -97,17 +108,11 @@ function App() {
     isOpen={isAddPlacePopupOpen} 
     onClose={closeAllPopups}/>
 
-  <PopupWithForm 
-    name="edit-avatar" 
-    title="Change profile picture" 
-    children={
-      <>
-      <input className="popup__input popup__input-avatar" id="avatar-input" type="url" name="avatar" placeholder="Image URL" required />
-      <span className="popup__input-error" id="avatar-input-error"></span>
-      </>
-      }
+  <EditAvatarPopUp 
     isOpen={isEditAvatarPopupOpen} 
-    onClose={closeAllPopups}/>
+    onClose={closeAllPopups}
+    onUpdateAvatar={handleUpdateAvatar}
+    />
   
   <PopupWithImage 
     card={selectedCard} 

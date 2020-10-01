@@ -13,7 +13,6 @@ function EditAvatarPopup(props){
       link: value
     });
     setValue('');
-    props.onClose();
   } 
 
   return(

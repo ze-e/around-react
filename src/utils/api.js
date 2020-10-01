@@ -55,7 +55,7 @@ class Api{
     })
   }
 
-  editAvatar({link}){
+  editAvatar(link){
     return fetch(`${this.baseUrl}/users/me/avatar`,{
       method: "PATCH",
       headers: {
