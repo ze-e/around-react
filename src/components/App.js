@@ -96,9 +96,9 @@ function handleCardLike(card) {
 
 function handleCardDelete(card){
   //delete the card
-  api.deleteCard(card._id).then((data) => { 
+  api.deleteCard(card._id).then(() => { 
     const newCards = cards.filter((c)=>{
-      return c._id !== data._id;
+      return c._id !== card._id;
     }); 
     setCards(newCards);
   }).catch((err) => { 
