@@ -96,7 +96,7 @@ function handleCardLike(card) {
 
 function handleCardDelete(card){
   //delete the card
-  api.deleteCard(card).then((data) => { 
+  api.deleteCard(card._id).then((data) => { 
     const newCards = cards.filter((c)=>{
       return c._id !== data._id;
     }); 
