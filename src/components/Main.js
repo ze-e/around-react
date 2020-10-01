@@ -13,7 +13,7 @@ function Main(props) {
 
   React.useEffect(()=>{
       setUserName(currentUser.name);
-      setUserDescription(currentUser.description);
+      setUserDescription(currentUser.about);
       setUserAvatar(currentUser.avatar);
 
       //load the cards

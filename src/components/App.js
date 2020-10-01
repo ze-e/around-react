@@ -5,7 +5,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import PopupWithImage from './PopupWithImage';
-import EditProfilePopup from './EditProfilePopUp';
+import EditProfilePopUp from './EditProfilePopUp';
 //context
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
@@ -44,9 +44,21 @@ function App() {
     setselectedCard({link:'#'});
   }
 
+  function handleUpdateUser(name, about){
+    api.editProfile(name, about).then((data)=>{
+      setcurrentUser(data);
+    }).catch((err) => { 
+      console.log(err);  
+    });
+    closeAllPopups();
+  }
+
+
   React.useEffect(()=>{
     api.getUser().then((data)=>{
       setcurrentUser(data);
+  }).catch((err) => { 
+    console.log(err);  
   });
 })
 
@@ -66,6 +78,7 @@ function App() {
   <EditProfilePopUp 
     isOpen={isEditProfilePopupOpen} 
     onClose={closeAllPopups}
+    onUpdateUser={handleUpdateUser}
   />
 
   <PopupWithForm 

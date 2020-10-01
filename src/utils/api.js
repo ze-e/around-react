@@ -35,7 +35,7 @@ class Api{
     })
   }
 
-  editProfile({name, about}){
+  editProfile(name, about){
     return fetch(`${this.baseUrl}/users/me`,{
       method: "PATCH",
       headers: {
