@@ -8,9 +8,14 @@ function EditAvatarPopup(props){
     if(!formInvalid){
       e.preventDefault();
       props.onUpdateAvatar(link);
-      setLink('');
+      resetForm();
     }
   } 
+
+  function resetForm(){
+    setLink('');
+    setFormInvalid(true);
+  }
   /* CLIENT FORM VALIDATION
     By default, no validation error for blank required field is 
     shown at the beginning, but the submit button will be

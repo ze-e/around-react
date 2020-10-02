@@ -15,8 +15,15 @@ function EditProfilePopUp(props){
       e.preventDefault();   
       // Pass the values of the managed components to the external handler
       props.onUpdateUser(name, description);
+      resetForm();
     }
   } 
+
+  function resetForm(){
+    setName('');
+    setDescription('');
+    setFormInvalid(true);
+  }
 
   /* CLIENT FORM VALIDATION
     By default, no validation error for blank required field is 
