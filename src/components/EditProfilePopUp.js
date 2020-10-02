@@ -1,5 +1,6 @@
 import React from 'react';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
+import formValidator from '../utils/formvalidator'
 
 function EditProfilePopUp(props){
   
@@ -57,11 +58,9 @@ function handleChange(e) {
     (input.name === 'description' && !input.validity.valid) ? setDescriptionError(input.validationMessage) : setDescriptionError(null); 
   }
 
+
   function validateForm(){
-    const inputList = Array.from(formRef.current.querySelectorAll('.popup__input'));
-    inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
-    }) ? setFormInvalid(true) : setFormInvalid(false);
+    formValidator(formRef.current,'.popup__input')? setFormInvalid(true) : setFormInvalid(false);
   }
 
   return(
