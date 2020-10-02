@@ -8,14 +8,14 @@ function EditAvatarPopup(props){
     if(!formInvalid){
       e.preventDefault();
       props.onUpdateAvatar(link);
-      resetForm();
     }
   } 
 
-  function resetForm(){
+  React.useEffect(()=>{
     setLink('');
     setFormInvalid(true);
-  }
+  },[props.isOpen])
+
   /* CLIENT FORM VALIDATION
     By default, no validation error for blank required field is 
     shown at the beginning, but the submit button will be

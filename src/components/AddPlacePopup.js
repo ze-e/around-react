@@ -8,14 +8,14 @@ function AddPlacePopup(props){
     e.preventDefault();
     // Pass the values of the managed components to the external handler
     props.onAddPlace(name, link);
-    resetForm();
   } 
 
-  function resetForm(){
+  React.useEffect(()=>{
     setName('');
     setLink('');
     setFormInvalid(true);
-  }
+  },[props.isOpen])
+
   /* CLIENT FORM VALIDATION
     By default, no validation error for blank required field is 
     shown at the beginning, but the submit button will be
