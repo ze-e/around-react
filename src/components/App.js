@@ -7,6 +7,7 @@ import PopupWithImage from './PopupWithImage';
 import EditProfilePopUp from './EditProfilePopUp';
 import EditAvatarPopUp from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeletePopup from './DeletePopup';
 //context
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
@@ -17,6 +18,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
+  const [isDeletePopupOpen, setisDeletePopupOpen] = React.useState(false);
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
   const [currentUser, setcurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -35,6 +37,10 @@ function App() {
     setisEditAvatarPopupOpen(true);
   }
 
+  function handleDeleteClick(){
+    setisDeletePopupOpen(true);
+  }
+
   function handleCardClick(card){
     setselectedCard(card);
   }
@@ -43,6 +49,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setisEditAvatarPopupOpen(false);
+    setisDeletePopupOpen(false);
     setselectedCard({link:'#'});
   }
 
@@ -104,6 +111,8 @@ function handleCardDelete(card){
   }).catch((err) => { 
       console.log(err);  
     });
+    closeAllPopups();
+
 }
 
 function handleAddPlaceSubmit(name, link){
@@ -128,7 +137,7 @@ function handleAddPlaceSubmit(name, link){
     card = {selectedCard}
     cards = {cards}
     onCardLike = {handleCardLike}
-    onCardDelete = {handleCardDelete}
+    onCardDelete = {handleDeleteClick}
   />
   <Footer />
 
@@ -153,6 +162,14 @@ function handleAddPlaceSubmit(name, link){
   <PopupWithImage 
     card={selectedCard} 
     onClose={closeAllPopups}/>
+
+<DeletePopup 
+    isOpen={isDeletePopupOpen} 
+    onClose={closeAllPopups}
+    onDelete = {handleCardDelete}
+  />
+
+
 </CurrentUserContext.Provider>
 </div>     
   );
