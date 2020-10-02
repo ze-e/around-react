@@ -2,8 +2,21 @@ import React from 'react';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function EditProfilePopUp(props){
+  
+  // Subscription to the context
+  const currentUser = React.useContext(CurrentUserContext);
+
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
+
+  function handleSubmit(e) {
+    //check if the form is valid before sending
+    if(!formInvalid){
+      e.preventDefault();   
+      // Pass the values of the managed components to the external handler
+      props.onUpdateUser(name, description);
+    }
+  } 
 
   /* CLIENT FORM VALIDATION
     By default, no validation error for blank required field is 
@@ -14,16 +27,10 @@ function EditProfilePopUp(props){
     independent of one another. Field validations control only the field styles, 
     and form/button validation controls the ability to send the form
   */
-
+  const formRef = React.useRef();
   const [nameError, setNameError] = React.useState(null);
   const [descriptionError, setDescriptionError] = React.useState(null);
   const [formInvalid, setFormInvalid] = React.useState(true)
-
-  // Subscription to the context
-  const currentUser = React.useContext(CurrentUserContext);
-
-  //form ref for validation
-  const formRef = React.useRef();
 
 function handleChange(e) {
   e.target.name === 'name' && setName(e.target.value);
@@ -32,15 +39,6 @@ function handleChange(e) {
   //validate fields and display any errors
   inputValidation(e.target);
 }
-
-  function handleSubmit(e) {
-    //check if the form is valid before sending
-    if(!formInvalid){
-      e.preventDefault();   
-      // Pass the values of the managed components to the external handler
-      props.onUpdateUser(name, description);
-    }
-  } 
 
   function inputValidation(input){
     (input.name === 'name' && !input.validity.valid) ? setNameError(input.validationMessage) : setNameError(null);

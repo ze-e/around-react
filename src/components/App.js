@@ -55,7 +55,7 @@ function App() {
     closeAllPopups();
   }
 
-  function handleUpdateAvatar({link}){
+  function handleUpdateAvatar(link){
     api.editAvatar(link).then((data)=>{
       setcurrentUser(data);
     }).catch((err) => { 

@@ -1,29 +1,56 @@
 import React from 'react';
 
 function EditAvatarPopup(props){
-  const [value, setValue] = React.useState('');
 
-  function handleChange(e){
-    setValue(e.target.value);
-  }
+  const [link, setLink] = React.useState('');
 
   function handleSubmit(e) {
-    e.preventDefault();
-    props.onUpdateAvatar({
-      link: value
-    });
-    setValue('');
+    if(!formInvalid){
+      e.preventDefault();
+      props.onUpdateAvatar(link);
+      setLink('');
+    }
   } 
+  /* CLIENT FORM VALIDATION
+    By default, no validation error for blank required field is 
+    shown at the beginning, but the submit button will be
+    disabled.
+
+    The button style/disabled state and individual field validations are 
+    independent of one another. Field validations control only the field styles, 
+    and form/button validation controls the ability to send the form
+  */
+  const formRef = React.useRef();
+  const [linkError, setLinkError] = React.useState(null);
+  const [formInvalid, setFormInvalid] = React.useState(true)
+
+  function handleChange(e){
+    setLink(e.target.value);
+    
+    //validate fields and display any errors
+    inputValidation(e.target);
+  }
+
+  function inputValidation(input){
+    !input.validity.valid ? setLinkError(input.validationMessage) : setLinkError(null);
+  }
+
+  function validateForm(){
+    const inputList = Array.from(formRef.current.querySelectorAll('.popup__input'));
+    inputList.some((inputElement) => {
+      return !inputElement.validity.valid;
+    }) ? setFormInvalid(true) : setFormInvalid(false);
+  }
 
   return(
     <section className={`popup popup_type_edit-avatar ${props.isOpen  && 'popup_state_opened'}`} >
     <div className="popup__container">
-      <form className={`popup__form popup__form_type_edit-avatar`} onSubmit={handleSubmit}>
+      <form className={`popup__form popup__form_type_edit-avatar`} onSubmit={handleSubmit} onChange={validateForm} ref={formRef}>
         <button className={`popup__close popup__close_type_edit-avatar`} type="button" onClick={props.onClose}></button>  
         <h4 className="popup__title">Change profile picture</h4>
-        <input className="popup__input popup__input-avatar" id="avatar-input" type="url" name="avatar"  value={value} placeholder="Image URL" required onChange={handleChange}/>
-      <span className="popup__input-error" id="avatar-input-error"></span>
-        <button className={`popup__submit popup__edit-avatar-submit`} type="submit">Save</button>
+        <input className={`popup__input popup__input-avatar ${linkError !==null && 'popup__input_type_error'}`} id="avatar-input" type="url" name="avatar"  value={link} placeholder="Image URL" required onChange={handleChange}/>
+      <span className={`popup__input-error ${linkError !==null && 'popup__error_visible'}`} id="avatar-input-error">{linkError}</span>
+        <button className={`popup__submit popup__edit-avatar-submit ${formInvalid && 'popup__submit_disabled'}`} type="submit" disabled={formInvalid}>Save</button>
       </form>
     </div>
   </section> 
