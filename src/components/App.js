@@ -19,6 +19,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
   const [isDeletePopupOpen, setisDeletePopupOpen] = React.useState(false);
+  const [isCardOpen, setisCardOpen] = React.useState(false);
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
   const [currentUser, setcurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -37,11 +38,13 @@ function App() {
     setisEditAvatarPopupOpen(true);
   }
 
-  function handleDeleteClick(){
+  function handleDeleteClick(card){
+    setselectedCard(card);
     setisDeletePopupOpen(true);
   }
 
   function handleCardClick(card){
+    setisCardOpen(true);
     setselectedCard(card);
   }
   
@@ -50,6 +53,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setisEditAvatarPopupOpen(false);
     setisDeletePopupOpen(false);
+    setisCardOpen(false);
     setselectedCard({link:'#'});
   }
 
@@ -161,11 +165,13 @@ function handleAddPlaceSubmit(name, link){
   
   <PopupWithImage 
     card={selectedCard} 
+    isOpen={isCardOpen}
     onClose={closeAllPopups}/>
 
 <DeletePopup 
     isOpen={isDeletePopupOpen} 
     onClose={closeAllPopups}
+    card = {selectedCard}
     onDelete = {handleCardDelete}
   />
 

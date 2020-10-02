@@ -3,7 +3,7 @@ import React from 'react';
 function PopupWithImage(props) {
 
   return (
-    <section className={`popup popup_type_image ${props.card.link !== '#' && 'popup_state_opened'}`}>
+    <section className={`popup popup_type_image ${props.isOpen && 'popup_state_opened'}`}>
     <div className="popup__container">
       <div className="popup__image-modal">
         <button className="popup__close popup__close_type_image" type="button" onClick={props.onClose}></button>  
