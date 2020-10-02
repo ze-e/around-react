@@ -60,38 +60,35 @@ function App() {
   function handleUpdateUser(name, about){
     api.editProfile(name, about).then((data)=>{
       setcurrentUser(data);
+      closeAllPopups();
     }).catch((err) => { 
       console.log(err);  
     });
-    closeAllPopups();
   }
 
   function handleUpdateAvatar(link){
     api.editAvatar(link).then((data)=>{
       setcurrentUser(data);
+      closeAllPopups();
     }).catch((err) => { 
       console.log(err);  
     });
-    closeAllPopups();
   }
 
-    //get user
+    //get user and initial cards
     React.useEffect(()=>{
+      //get user
       api.getUser().then((data) => {  
         setcurrentUser(data)
+        //get cards
+        api.getCards().then((data) => {  
+          setCards(data)
+        }).catch((err) => { 
+            console.log(err)})
       }).catch((err) => { 
           console.log(err)})
     },[])
 
-  //get cards
-  React.useEffect(()=>{
-    api.getCards().then((data) => {  
-      setCards(data)
-    }).catch((err) => { 
-        console.log(err)})
-  },[])   
-
-//
 function handleCardLike(card) {
   // Check one more time if this card was already liked
   const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -102,7 +99,8 @@ function handleCardLike(card) {
     const newCards = cards.map((c) => c._id === card._id ? newCard : c);
     // Update the state
     setCards(newCards);
-  });
+  }).catch((err) => { 
+    console.log(err)})
 } 
 
 function handleCardDelete(card){
@@ -112,21 +110,19 @@ function handleCardDelete(card){
       return c._id !== card._id;
     }); 
     setCards(newCards);
+    closeAllPopups();
   }).catch((err) => { 
       console.log(err);  
     });
-    closeAllPopups();
-
 }
 
 function handleAddPlaceSubmit(name, link){
   api.addCard(name,link).then((newCard) => { 
     setCards([...cards, newCard]); 
+    closeAllPopups();
   }).catch((err) => { 
       console.log(err);  
     });
-
-  closeAllPopups();
 }
 
   return (
