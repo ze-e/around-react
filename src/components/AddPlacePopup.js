@@ -4,13 +4,6 @@ function AddPlacePopup(props){
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
 
-  function handleChange(e) {
-    const targetName = e.target.name;
-    const targetValue = e.target.value;
-    targetName === 'name' && setName(targetValue);
-    targetName === 'link'&& setLink(targetValue);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
     // Pass the values of the managed components to the external handler
