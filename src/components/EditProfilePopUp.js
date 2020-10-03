@@ -7,29 +7,23 @@ function EditProfilePopUp(props){
   // Subscription to the context
   const currentUser = React.useContext(CurrentUserContext);
 
-  const [name, setName] = React.useState(currentUser.name);
-  const [description, setDescription] = React.useState(currentUser.about);
-
-  React.useEffect(()=>{
-    setName(currentUser.name)
-    setDescription(currentUser.about)
-  },[currentUser])
-
+  const [name, setName] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  
   function handleSubmit(e) {
     //check if the form is valid before sending
     if(!formInvalid){
       e.preventDefault();   
       // Pass the values of the managed components to the external handler
       props.onUpdateUser(name, description);
-      resetForm();
     }
   } 
 
-  function resetForm(){
+  React.useEffect(()=>{
     setName('');
     setDescription('');
     setFormInvalid(true);
-  }
+  },[props.isOpen])
 
   /* CLIENT FORM VALIDATION
     By default, no validation error for blank required field is 
