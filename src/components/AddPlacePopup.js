@@ -2,19 +2,28 @@ import React from 'react';
 import {formValidator, fieldValidator} from '../utils/formvalidator'
 
 function AddPlacePopup(props){
+  //loading
+  const [loading, setLoading] = React.useState(false);
+  
+  //fields
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
 
   function handleSubmit(e) {
-    e.preventDefault();
-    // Pass the values of the managed components to the external handler
-    props.onAddPlace(name, link);
+    if(!formInvalid){
+      e.preventDefault();
+      // Pass the values of the managed components to the external handler
+      props.onAddPlace(name, link);
+      //set loading
+      setLoading(true);
+    }
   } 
 
   React.useEffect(()=>{
     setName('');
     setLink('');
     setFormInvalid(true);
+    setLoading(false);
   },[props.isOpen])
 
   /* CLIENT FORM VALIDATION
@@ -61,7 +70,7 @@ function AddPlacePopup(props){
       
       <input className={`popup__input popup__input-card-url ${linkError !=='' && 'popup__input_type_error'}`} id="url-input" type="url" name="link" placeholder="Image URL" required value={link} onChange={handleChange}/>
       <span className={`popup__input-error ${linkError !=='' && 'popup__error_visible'}`} id="url-input-error">{linkError}</span>
-        <button className={`popup__submit popup__add-card-submit ${formInvalid && 'popup__submit_disabled'}`} disabled={formInvalid} type="submit">Create</button>
+  <button className={`popup__submit popup__add-card-submit ${formInvalid && 'popup__submit_disabled'}`} disabled={formInvalid} type="submit">{`${loading ? 'Loading...':'Create'}`}</button>
       </form>
     </div>
   </section>  

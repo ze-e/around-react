@@ -2,19 +2,24 @@ import React from 'react';
 import {formValidator, fieldValidator} from '../utils/formvalidator'
 
 function EditAvatarPopup(props){
-
+  //loading
+  const [loading, setLoading] = React.useState(false);
+  //form field
   const [link, setLink] = React.useState('');
 
   function handleSubmit(e) {
     if(!formInvalid){
       e.preventDefault();
       props.onUpdateAvatar(link);
+      //set loading
+      setLoading(true);
     }
   } 
 
   React.useEffect(()=>{
     setLink('');
     setFormInvalid(true);
+    setLoading(false);
   },[props.isOpen])
 
   /* CLIENT FORM VALIDATION
@@ -49,7 +54,7 @@ function EditAvatarPopup(props){
         <h4 className="popup__title">Change profile picture</h4>
         <input className={`popup__input popup__input-avatar ${linkError !=='' && 'popup__input_type_error'}`} id="avatar-input" type="url" name="avatar"  value={link} placeholder="Image URL" required onChange={handleChange}/>
       <span className={`popup__input-error ${linkError !=='' && 'popup__error_visible'}`} id="avatar-input-error">{linkError}</span>
-        <button className={`popup__submit popup__edit-avatar-submit ${formInvalid && 'popup__submit_disabled'}`} type="submit" disabled={formInvalid}>Save</button>
+        <button className={`popup__submit popup__edit-avatar-submit ${formInvalid && 'popup__submit_disabled'}`} type="submit" disabled={formInvalid}>{`${loading ? 'Loading...':'Save'}`}</button>
       </form>
     </div>
   </section> 

@@ -3,10 +3,11 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import {formValidator, fieldValidator} from '../utils/formvalidator'
 
 function EditProfilePopUp(props){
-  
+    //loading
+    const [loading, setLoading] = React.useState(false);
   // Subscription to the context
   const currentUser = React.useContext(CurrentUserContext);
-
+    //form field
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   
@@ -16,6 +17,8 @@ function EditProfilePopUp(props){
       e.preventDefault();   
       // Pass the values of the managed components to the external handler
       props.onUpdateUser(name, description);
+      //set loading
+      setLoading(true);
     }
   } 
 
@@ -23,6 +26,7 @@ function EditProfilePopUp(props){
     setName('');
     setDescription('');
     setFormInvalid(true);
+    setLoading(false);
   },[props.isOpen])
 
   /* CLIENT FORM VALIDATION
@@ -68,7 +72,7 @@ function handleChange(e) {
           <span className={`popup__input-error" id="name-input-error ${nameError !=='' && 'popup__error_visible'}`}>{nameError}</span>
         <input className={`popup__input popup__input-description ${descriptionError !=='' && 'popup__input_type_error'}`} id="description-input" type="text" name="description" required minLength="2" maxLength="200" value={description} onChange={handleChange}/>
           <span className={`popup__input-error" id="description-input-error ${descriptionError !=='' && 'popup__error_visible'}`}>{descriptionError}</span>
-        <button className={`popup__submit popup__edit-profile-submit ${formInvalid && 'popup__submit_disabled'}`} disabled={formInvalid} type="submit" >Save</button>
+        <button className={`popup__submit popup__edit-profile-submit ${formInvalid && 'popup__submit_disabled'}`} disabled={formInvalid} type="submit">{`${loading ? 'Loading...':'Save'}`}</button>
       </form>
     </div>
   </section>  

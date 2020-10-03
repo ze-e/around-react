@@ -14,7 +14,6 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import {api} from '../utils/api';
 
 function App() {
-
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
@@ -23,8 +22,6 @@ function App() {
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
   const [currentUser, setcurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
-
-
 
   function handleEditProfileClick(){
     setIsEditProfilePopupOpen(true);
@@ -63,6 +60,8 @@ function App() {
       closeAllPopups();
     }).catch((err) => { 
       console.log(err);  
+      alert(err);
+      closeAllPopups();
     });
   }
 
@@ -71,7 +70,9 @@ function App() {
       setcurrentUser(data);
       closeAllPopups();
     }).catch((err) => { 
-      console.log(err);  
+      console.log(err);
+      alert(err);
+      closeAllPopups();  
     });
   }
 
@@ -84,9 +85,15 @@ function App() {
         api.getCards().then((data) => {  
           setCards(data)
         }).catch((err) => { 
-            console.log(err)})
+            console.log(err);
+            alert(err);
+            closeAllPopups();
+          })
       }).catch((err) => { 
-          console.log(err)})   
+          console.log(err);
+          alert(err);
+          closeAllPopups();
+        })   
     },[])
 
 function handleCardLike(card) {
@@ -100,7 +107,10 @@ function handleCardLike(card) {
     // Update the state
     setCards(newCards);
   }).catch((err) => { 
-    console.log(err)})
+    console.log(err);
+    alert(err);
+    closeAllPopups();
+  })
 } 
 
 function handleCardDelete(card){
@@ -112,7 +122,9 @@ function handleCardDelete(card){
     setCards(newCards);
     closeAllPopups();
   }).catch((err) => { 
-      console.log(err);  
+      console.log(err); 
+      alert(err);
+      closeAllPopups(); 
     });
 }
 
@@ -121,7 +133,9 @@ function handleAddPlaceSubmit(name, link){
     setCards([...cards, newCard]); 
     closeAllPopups();
   }).catch((err) => { 
-      console.log(err);  
+      console.log(err); 
+      alert(err);
+      closeAllPopups(); 
     });
 }
 
