@@ -47,8 +47,8 @@ function EditAvatarPopup(props){
       <form className={`popup__form popup__form_type_edit-avatar`} onSubmit={handleSubmit} onChange={validateForm} ref={formRef}>
         <button className={`popup__close popup__close_type_edit-avatar`} type="button" onClick={props.onClose}></button>  
         <h4 className="popup__title">Change profile picture</h4>
-        <input className={`popup__input popup__input-avatar ${linkError !==null && 'popup__input_type_error'}`} id="avatar-input" type="url" name="avatar"  value={link} placeholder="Image URL" required onChange={handleChange}/>
-      <span className={`popup__input-error ${linkError !==null && 'popup__error_visible'}`} id="avatar-input-error">{linkError}</span>
+        <input className={`popup__input popup__input-avatar ${linkError !=='' && 'popup__input_type_error'}`} id="avatar-input" type="url" name="avatar"  value={link} placeholder="Image URL" required onChange={handleChange}/>
+      <span className={`popup__input-error ${linkError !=='' && 'popup__error_visible'}`} id="avatar-input-error">{linkError}</span>
         <button className={`popup__submit popup__edit-avatar-submit ${formInvalid && 'popup__submit_disabled'}`} type="submit" disabled={formInvalid}>Save</button>
       </form>
     </div>
