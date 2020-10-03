@@ -54,12 +54,6 @@ function handleChange(e) {
   }
 }
 
-  function inputValidation(input){
-    (input.name === 'name' && !input.validity.valid) ? setNameError(input.validationMessage) : setNameError('');
-    (input.name === 'description' && !input.validity.valid) ? setDescriptionError(input.validationMessage) : setDescriptionError(''); 
-  }
-
-
   function validateForm(){
     formValidator(formRef.current,'.popup__input')? setFormInvalid(true) : setFormInvalid(false);
   }

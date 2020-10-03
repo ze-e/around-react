@@ -1,4 +1,5 @@
 import React from 'react';
+import {formValidator, fieldValidator} from '../utils/formvalidator'
 
 function AddPlacePopup(props){
   const [name, setName] = React.useState('');
@@ -31,24 +32,23 @@ function AddPlacePopup(props){
   const [formInvalid, setFormInvalid] = React.useState(true)
 
   function handleChange(e) {
-    e.target.name === 'name' && setName(e.target.value);
-    e.target.name === 'link'&& setLink(e.target.value);
+    if(e.target.name === 'name'){
+      //set value
+      setName(e.target.value);
+      //set error
+      fieldValidator(e.target, setNameError)
+    }
+    if(e.target.name === 'link'){
+      //set value
+      setLink(e.target.value);
+      //set error
+      fieldValidator(e.target, setLinkError)
+    }
+  }
   
-    //validate fields and display any errors
-    inputValidation(e.target);
-  }
-
-  function inputValidation(input){
-    (input.name === 'name' && !input.validity.valid) ? setNameError(input.validationMessage) : setNameError(null);
-    (input.name === 'link' && !input.validity.valid) ? setLinkError(input.validationMessage) : setLinkError(null); 
-  }
-
-  function validateForm(){
-    const inputList = Array.from(formRef.current.querySelectorAll('.popup__input'));
-    inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
-    }) ? setFormInvalid(true) : setFormInvalid(false);
-  }
+    function validateForm(){
+      formValidator(formRef.current,'.popup__input')? setFormInvalid(true) : setFormInvalid(false);
+    }
 
   return(
     <section className={`popup popup_type_add-card ${props.isOpen  && 'popup_state_opened'}`} >

@@ -1,4 +1,5 @@
 import React from 'react';
+import {formValidator, fieldValidator} from '../utils/formvalidator'
 
 function EditAvatarPopup(props){
 
@@ -26,26 +27,19 @@ function EditAvatarPopup(props){
     and form/button validation controls the ability to send the form
   */
   const formRef = React.useRef();
-  const [linkError, setLinkError] = React.useState(null);
+  const [linkError, setLinkError] = React.useState('');
   const [formInvalid, setFormInvalid] = React.useState(true)
 
-  function handleChange(e){
-    setLink(e.target.value);
-    
-    //validate fields and display any errors
-    inputValidation(e.target);
+  function handleChange(e) {
+      //set value
+      setLink(e.target.value);
+      //set error
+      fieldValidator(e.target, setLinkError)
   }
-
-  function inputValidation(input){
-    !input.validity.valid ? setLinkError(input.validationMessage) : setLinkError(null);
-  }
-
-  function validateForm(){
-    const inputList = Array.from(formRef.current.querySelectorAll('.popup__input'));
-    inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
-    }) ? setFormInvalid(true) : setFormInvalid(false);
-  }
+  
+    function validateForm(){
+      formValidator(formRef.current,'.popup__input')? setFormInvalid(true) : setFormInvalid(false);
+    }
 
   return(
     <section className={`popup popup_type_edit-avatar ${props.isOpen  && 'popup_state_opened'}`} >
