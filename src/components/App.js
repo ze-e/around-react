@@ -57,23 +57,19 @@ function App() {
   function handleUpdateUser(name, about){
     api.editProfile(name, about).then((data)=>{
       setcurrentUser(data);
-      closeAllPopups();
     }).catch((err) => { 
       console.log(err);  
       alert(err);
-      closeAllPopups();
-    });
+    }).finally(()=>{closeAllPopups()})
   }
 
   function handleUpdateAvatar(link){
     api.editAvatar(link).then((data)=>{
       setcurrentUser(data);
-      closeAllPopups();
     }).catch((err) => { 
       console.log(err);
       alert(err);
-      closeAllPopups();  
-    });
+    }).finally(()=>{closeAllPopups()})
   }
 
     //get user and initial cards
@@ -87,13 +83,11 @@ function App() {
         }).catch((err) => { 
             console.log(err);
             alert(err);
-            closeAllPopups();
-          })
+          }).finally(()=>{closeAllPopups()})
       }).catch((err) => { 
           console.log(err);
           alert(err);
-          closeAllPopups();
-        })   
+        }).finally(()=>{closeAllPopups()})   
     },[])
 
 function handleCardLike(card) {
@@ -109,8 +103,7 @@ function handleCardLike(card) {
   }).catch((err) => { 
     console.log(err);
     alert(err);
-    closeAllPopups();
-  })
+  }).finally(()=>{closeAllPopups()})
 } 
 
 function handleCardDelete(cardId){
@@ -120,23 +113,19 @@ function handleCardDelete(cardId){
       return c._id !== cardId;
     }); 
     setCards(newCards);
-    closeAllPopups();
   }).catch((err) => { 
       console.log(err); 
       alert(err);
-      closeAllPopups(); 
-    });
+    }).finally(()=>{closeAllPopups()})
 }
 
 function handleAddPlaceSubmit(name, link){
   api.addCard(name,link).then((newCard) => { 
     setCards([...cards, newCard]); 
-    closeAllPopups();
   }).catch((err) => { 
       console.log(err); 
       alert(err);
-      closeAllPopups(); 
-    });
+    }).finally(()=>{closeAllPopups()})
 }
 
   return (
