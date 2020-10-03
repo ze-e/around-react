@@ -6,7 +6,8 @@ function DeletePopup(props){
 
   function handleSubmit(e){
     e.preventDefault();
-    props.onDelete(props.card);
+    props.onDelete(props.card._id);
+
     //set loading
     setLoading(true);
   }

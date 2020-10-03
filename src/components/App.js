@@ -113,11 +113,11 @@ function handleCardLike(card) {
   })
 } 
 
-function handleCardDelete(card){
+function handleCardDelete(cardId){
   //delete the card
-  api.deleteCard(card._id).then(() => { 
+  api.deleteCard(cardId).then(() => { 
     const newCards = cards.filter((c)=>{
-      return c._id !== card._id;
+      return c._id !== cardId;
     }); 
     setCards(newCards);
     closeAllPopups();

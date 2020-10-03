@@ -17,6 +17,7 @@ function EditProfilePopUp(props){
       e.preventDefault();   
       // Pass the values of the managed components to the external handler
       props.onUpdateUser(name, description);
+
       //set loading
       setLoading(true);
     }
