@@ -176,8 +176,7 @@ function handleAddPlaceSubmit(name, link){
 
 
 </CurrentUserContext.Provider>
-</div>     
-  );
-}
+</div>
+)}
 
 export default App;

@@ -23,6 +23,13 @@ function EditProfilePopUp(props){
     }
   } 
 
+  //set initial values
+  React.useEffect(()=>{
+      currentUser.name && setName(currentUser.name)
+      currentUser.about && setDescription(currentUser.about)
+  },[])
+
+  //reset form
   React.useEffect(()=>{
     setName('');
     setDescription('');
