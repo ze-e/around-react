@@ -4,7 +4,7 @@ import {formValidator, fieldValidator} from '../utils/formvalidator'
 
 function EditProfilePopUp(props){
     //loading
-    const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   // Subscription to the context
   const currentUser = React.useContext(CurrentUserContext);
     //form field
@@ -23,11 +23,11 @@ function EditProfilePopUp(props){
     }
   } 
 
-  //set initial values
+  //set default values
   React.useEffect(()=>{
-      currentUser.name && setName(currentUser.name)
-      currentUser.about && setDescription(currentUser.about)
-  },[])
+    currentUser.name && setName(currentUser.name);
+    currentUser.about && setDescription(currentUser.about);
+  },[currentUser])
 
   //reset form
   React.useEffect(()=>{
@@ -76,9 +76,9 @@ function handleChange(e) {
       <form className={`popup__form popup__form_type_edit-profile`} onSubmit={handleSubmit} onChange={validateForm} ref={formRef}>
         <button className={`popup__close popup__close_type_edit-profile`} type="button" onClick={props.onClose}></button>  
         <h4 className="popup__title">Edit Profile</h4>
-        <input className={`popup__input popup__input-name ${nameError !=='' && 'popup__input_type_error'}`} id="name-input" type="text" name="name" required minLength="2" maxLength="40" value={name} onChange={handleChange}/>
+        <input className={`popup__input popup__input-name ${nameError !=='' && 'popup__input_type_error'}`} id="name-input" type="text" name="name" required minLength="2" maxLength="40" placeholder={currentUser.name} defaultValue={currentUser.name} value={name} onChange={handleChange}/>
           <span className={`popup__input-error" id="name-input-error ${nameError !=='' && 'popup__error_visible'}`}>{nameError}</span>
-        <input className={`popup__input popup__input-description ${descriptionError !=='' && 'popup__input_type_error'}`} id="description-input" type="text" name="description" required minLength="2" maxLength="200" value={description} onChange={handleChange}/>
+        <input className={`popup__input popup__input-description ${descriptionError !=='' && 'popup__input_type_error'}`} id="description-input" type="text" name="description" required minLength="2" maxLength="200" placeholder={currentUser.about} defaultValue={currentUser.about} value={description} onChange={handleChange}/>
           <span className={`popup__input-error" id="description-input-error ${descriptionError !=='' && 'popup__error_visible'}`}>{descriptionError}</span>
         <button className={`popup__submit popup__edit-profile-submit ${formInvalid && 'popup__submit_disabled'}`} disabled={formInvalid} type="submit">{`${loading ? 'Loading...':'Save'}`}</button>
       </form>
