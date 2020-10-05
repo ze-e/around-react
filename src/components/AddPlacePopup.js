@@ -1,5 +1,4 @@
 import React from 'react';
-import {formValidator, fieldValidator} from '../utils/formvalidator'
 
 function AddPlacePopup(props){
   //loading
@@ -45,18 +44,18 @@ function AddPlacePopup(props){
       //set value
       setName(e.target.value);
       //set error
-      fieldValidator(e.target, setNameError)
+      props.fieldValidator(e.target, setNameError)
     }
     if(e.target.name === 'link'){
       //set value
       setLink(e.target.value);
       //set error
-      fieldValidator(e.target, setLinkError)
+      props.fieldValidator(e.target, setLinkError)
     }
   }
   
     function validateForm(){
-      formValidator(formRef.current,'.popup__input')? setFormInvalid(true) : setFormInvalid(false);
+      props.formValidator(formRef.current,'.popup__input')? setFormInvalid(true) : setFormInvalid(false);
     }
 
   return(

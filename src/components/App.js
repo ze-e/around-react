@@ -12,6 +12,7 @@ import DeletePopup from './DeletePopup';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
 import {api} from '../utils/api';
+import {formValidator} from '../utils/formValidator'
 
 function App() {
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
@@ -174,6 +175,8 @@ function App() {
     onClose={closeAllPopups}
     onUpdateUser={handleUpdateUser}
     onOutsideClick={handleClickOutsideForm}
+    formValidator={formValidator.formValidator}
+    fieldValidator={formValidator.fieldValidator}
   />
 
   <AddPlacePopup 
@@ -181,6 +184,8 @@ function App() {
     onClose={closeAllPopups}
     onAddPlace={handleAddPlaceSubmit}
     onOutsideClick={handleClickOutsideForm}
+    formValidator={formValidator.formValidator}
+    fieldValidator={formValidator.fieldValidator}
     />
 
   <EditAvatarPopUp 
@@ -188,6 +193,8 @@ function App() {
     onClose={closeAllPopups}
     onUpdateAvatar={handleUpdateAvatar}
     onOutsideClick={handleClickOutsideForm}
+    formValidator={formValidator.formValidator}
+    fieldValidator={formValidator.fieldValidator}
     />
   
   <PopupWithImage 
