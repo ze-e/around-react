@@ -23,7 +23,7 @@ function Card(props){
     `element__delete-button ${isOwn && 'element__delete-button_visibility_visible'}`
   ); 
 
-    //check if card was already liked
+  //check if card was already liked
   const isLiked = props.card.likes.some(i => i._id === currentUser._id);
   const cardLikeButtonClassName = `element__like-button ${isLiked && 'element__like-button_stateliked'}`; 
 

@@ -7,6 +7,13 @@ function EditAvatarPopup(props){
   //form field
   const [link, setLink] = React.useState('');
 
+  //reset form on open
+  React.useEffect(()=>{
+    setLink('');
+    setFormInvalid(true);
+    setLoading(false);
+  },[props.isOpen])
+
   function handleSubmit(e) {
     if(!formInvalid){
       e.preventDefault();
@@ -15,12 +22,6 @@ function EditAvatarPopup(props){
       setLoading(true);
     }
   } 
-
-  React.useEffect(()=>{
-    setLink('');
-    setFormInvalid(true);
-    setLoading(false);
-  },[props.isOpen])
 
   /* CLIENT FORM VALIDATION
     By default, no validation error for blank required field is 

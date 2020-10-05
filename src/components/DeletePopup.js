@@ -4,6 +4,11 @@ function DeletePopup(props){
   //loading
   const [loading, setLoading] = React.useState(false);
 
+  //reset form on open
+  React.useEffect(()=>{
+    setLoading(false);
+  },[props.isOpen])
+
   function handleSubmit(e){
     e.preventDefault();
     props.onDelete(props.card._id);
@@ -12,9 +17,6 @@ function DeletePopup(props){
     setLoading(true);
   }
 
-  React.useEffect(()=>{
-    setLoading(false);
-  },[props.isOpen])
 
   return(
     <section className={`popup popup_type_delete ${props.isOpen && 'popup_state_opened'}`} onClick={(e)=>{props.onOutsideClick(e,'popup_type_delete')}}>

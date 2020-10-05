@@ -14,16 +14,77 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import {api} from '../utils/api';
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
-  const [isDeletePopupOpen, setisDeletePopupOpen] = React.useState(false);
-  const [isCardOpen, setisCardOpen] = React.useState(false);
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
   const [currentUser, setcurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  
+  //isOpen props for popups
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = React.useState(false);
+  const [isDeletePopupOpen, setisDeletePopupOpen] = React.useState(false); 
+  const [isCardOpen, setisCardOpen] = React.useState(false);
+    
+  //update user functions
+  function handleUpdateUser(name, about){
+    api.editProfile(name, about).then((data)=>{
+      setcurrentUser(data);
+    }).catch((err) => { 
+      console.log(err);  
+      alert(err);
+    }).finally(()=>{closeAllPopups()})
+  }
 
+  function handleUpdateAvatar(link){
+    api.editAvatar(link).then((data)=>{
+      setcurrentUser(data);
+    }).catch((err) => { 
+      console.log(err);
+      alert(err);
+    }).finally(()=>{closeAllPopups()})
+  }
+  //card functions
+  function handleDeleteClick(card){
+    setselectedCard(card);
+    setisDeletePopupOpen(true);
+  }
+
+  function handleCardClick(card){
+    setisCardOpen(true);
+    setselectedCard(card);
+  }
+
+  function handleCardLike(card) {
+    // Check one more time if this card was already liked
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    
+    // Send a request to the API and getting the updated card data
+    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
+        // Create a new array based on the existing one and putting a new card into it
+      const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+      // Update the state
+      setCards(newCards);
+    }).catch((err) => { 
+      console.log(err);
+      alert(err);
+    }).finally(()=>{closeAllPopups()})
+  } 
+
+  function handleCardDelete(cardId){
+    //delete the card
+    api.deleteCard(cardId).then(() => { 
+      const newCards = cards.filter((c)=>{
+        return c._id !== cardId;
+      }); 
+      setCards(newCards);
+    }).catch((err) => { 
+        console.log(err); 
+        alert(err);
+      }).finally(()=>{closeAllPopups()})
+  }
+  
+  //popup functions
   function handleEditProfileClick(){
     setIsEditProfilePopupOpen(true);
   }
@@ -36,16 +97,16 @@ function App() {
     setisEditAvatarPopupOpen(true);
   }
 
-  function handleDeleteClick(card){
-    setselectedCard(card);
-    setisDeletePopupOpen(true);
-  }
-
-  function handleCardClick(card){
-    setisCardOpen(true);
-    setselectedCard(card);
+  function handleAddPlaceSubmit(name, link){
+    api.addCard(name,link).then((newCard) => { 
+      setCards([...cards, newCard]); 
+    }).catch((err) => { 
+        console.log(err); 
+        alert(err);
+      }).finally(()=>{closeAllPopups()})
   }
   
+  //close and reset popups
   function closeAllPopups(){
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -70,24 +131,6 @@ function App() {
     } 
   } 
 
-  function handleUpdateUser(name, about){
-    api.editProfile(name, about).then((data)=>{
-      setcurrentUser(data);
-    }).catch((err) => { 
-      console.log(err);  
-      alert(err);
-    }).finally(()=>{closeAllPopups()})
-  }
-
-  function handleUpdateAvatar(link){
-    api.editAvatar(link).then((data)=>{
-      setcurrentUser(data);
-    }).catch((err) => { 
-      console.log(err);
-      alert(err);
-    }).finally(()=>{closeAllPopups()})
-  }
-
     //get user and initial cards
     React.useEffect(()=>{
       //get user
@@ -106,44 +149,6 @@ function App() {
         })
         .finally(()=>{setLoading(false)})   
     },[])
-
-function handleCardLike(card) {
-  // Check one more time if this card was already liked
-  const isLiked = card.likes.some(i => i._id === currentUser._id);
-  
-  // Send a request to the API and getting the updated card data
-  api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
-      // Create a new array based on the existing one and putting a new card into it
-    const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-    // Update the state
-    setCards(newCards);
-  }).catch((err) => { 
-    console.log(err);
-    alert(err);
-  }).finally(()=>{closeAllPopups()})
-} 
-
-function handleCardDelete(cardId){
-  //delete the card
-  api.deleteCard(cardId).then(() => { 
-    const newCards = cards.filter((c)=>{
-      return c._id !== cardId;
-    }); 
-    setCards(newCards);
-  }).catch((err) => { 
-      console.log(err); 
-      alert(err);
-    }).finally(()=>{closeAllPopups()})
-}
-
-function handleAddPlaceSubmit(name, link){
-  api.addCard(name,link).then((newCard) => { 
-    setCards([...cards, newCard]); 
-  }).catch((err) => { 
-      console.log(err); 
-      alert(err);
-    }).finally(()=>{closeAllPopups()})
-}
 
   return (
     //show loading message if user and cards are not loaded

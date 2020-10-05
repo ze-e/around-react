@@ -10,6 +10,16 @@ function EditProfilePopUp(props){
     //form field
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
+
+  //reset form on open
+  React.useEffect(()=>{
+    setFormInvalid(true);
+    setLoading(false);
+
+    //set default values
+    currentUser.name && setName(currentUser.name);
+    currentUser.about && setDescription(currentUser.about);
+  },[props.isOpen])
   
   function handleSubmit(e) {
     //check if the form is valid before sending
@@ -23,15 +33,6 @@ function EditProfilePopUp(props){
     }
   } 
 
-  React.useEffect(()=>{
-    //reset form
-    setFormInvalid(true);
-    setLoading(false);
-
-    //set default values
-    currentUser.name && setName(currentUser.name);
-    currentUser.about && setDescription(currentUser.about);
-  },[props.isOpen])
 
   /* CLIENT FORM VALIDATION
     By default, no validation error for blank required field is 
