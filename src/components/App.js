@@ -54,6 +54,20 @@ function App() {
     setselectedCard({link:'#'});
   }
 
+  function handleKeyPress(e){
+    console.log(e.key);
+    if(e.key === 'Escape'){
+      closeAllPopups();
+    }
+  }
+
+  //click outside container 
+  function handleClickOutsideForm(e, selector){
+    if(e.target.className.includes(selector)){
+      closeAllPopups();
+    }
+  }
+
   function handleUpdateUser(name, about){
     api.editProfile(name, about).then((data)=>{
       setcurrentUser(data);
@@ -129,7 +143,7 @@ function handleAddPlaceSubmit(name, link){
 }
 
   return (
-<div className="App page">
+<div className="App page" onKeyPress={handleKeyPress}>
 <CurrentUserContext.Provider value={currentUser}>
   <Header />
   <Main 
@@ -148,30 +162,36 @@ function handleAddPlaceSubmit(name, link){
     isOpen={isEditProfilePopupOpen} 
     onClose={closeAllPopups}
     onUpdateUser={handleUpdateUser}
+    onOutsideClick={handleClickOutsideForm}
   />
 
   <AddPlacePopup 
     isOpen={isAddPlacePopupOpen} 
     onClose={closeAllPopups}
     onAddPlace={handleAddPlaceSubmit}
+    onOutsideClick={handleClickOutsideForm}
     />
 
   <EditAvatarPopUp 
     isOpen={isEditAvatarPopupOpen} 
     onClose={closeAllPopups}
     onUpdateAvatar={handleUpdateAvatar}
+    onOutsideClick={handleClickOutsideForm}
     />
   
   <PopupWithImage 
     card={selectedCard} 
     isOpen={isCardOpen}
-    onClose={closeAllPopups}/>
+    onClose={closeAllPopups}
+    onOutsideClick={handleClickOutsideForm}
+    />
 
 <DeletePopup 
     isOpen={isDeletePopupOpen} 
     onClose={closeAllPopups}
     card = {selectedCard}
     onDelete = {handleCardDelete}
+    onOutsideClick={handleClickOutsideForm}
   />
 
 

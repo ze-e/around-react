@@ -60,7 +60,7 @@ function AddPlacePopup(props){
     }
 
   return(
-    <section className={`popup popup_type_add-card ${props.isOpen  && 'popup_state_opened'}`} >
+    <section className={`popup popup_type_add-card ${props.isOpen  && 'popup_state_opened'}`} onClick={(e)=>{props.onOutsideClick(e,'popup_type_add-card')}}>
     <div className="popup__container">
       <form className={`popup__form popup__form_type_add-card`} onSubmit={handleSubmit} onChange={validateForm} ref={formRef}>
         <button className={`popup__close popup__close_type_add-card`} type="button" onClick={props.onClose}></button>  

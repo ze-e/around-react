@@ -47,7 +47,7 @@ function EditAvatarPopup(props){
     }
 
   return(
-    <section className={`popup popup_type_edit-avatar ${props.isOpen  && 'popup_state_opened'}`} >
+    <section className={`popup popup_type_edit-avatar ${props.isOpen  && 'popup_state_opened'}`} onClick={(e)=>{props.onOutsideClick(e,'popup_type_edit-avatar')}}>
     <div className="popup__container">
       <form className={`popup__form popup__form_type_edit-avatar`} onSubmit={handleSubmit} onChange={validateForm} ref={formRef}>
         <button className={`popup__close popup__close_type_edit-avatar`} type="button" onClick={props.onClose}></button>  

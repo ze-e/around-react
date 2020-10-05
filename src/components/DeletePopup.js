@@ -17,7 +17,7 @@ function DeletePopup(props){
   },[props.isOpen])
 
   return(
-    <section className={`popup popup_type_delete ${props.isOpen && 'popup_state_opened'}`}>
+    <section className={`popup popup_type_delete ${props.isOpen && 'popup_state_opened'}`} onClick={(e)=>{props.onOutsideClick(e,'popup_type_delete')}}>
       <div className="popup__container">
         <form className="popup__form" onSubmit={handleSubmit}>
           <button className="popup__close popup__close_type_add-card"></button>  
