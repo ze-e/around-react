@@ -53,14 +53,7 @@ function App() {
     setisCardOpen(false);
     setselectedCard({link:'#'});
   }
-
-  function handleKeyPress(e){
-    console.log(e);
-    if(e.key === 'Escape'){
-      closeAllPopups();
-    }
-  }
-
+  
   //click outside container 
   function handleClickOutsideForm(e, selector){
     if(e.target.className.includes(selector)){
@@ -143,7 +136,7 @@ function handleAddPlaceSubmit(name, link){
 }
 
   return (
-<div className="App page" onKeyPress={handleKeyPress}>
+<div className="App page">
 <CurrentUserContext.Provider value={currentUser}>
   <Header />
   <Main 
