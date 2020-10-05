@@ -22,6 +22,7 @@ function App() {
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
   const [currentUser, setcurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   function handleEditProfileClick(){
     setIsEditProfilePopupOpen(true);
@@ -61,6 +62,14 @@ function App() {
     }
   }
 
+  //click esc to close
+  function handleKeyPress(e){ 
+    console.log(e); 
+    if(e.key === 'Escape'){ 
+      closeAllPopups(); 
+    } 
+  } 
+
   function handleUpdateUser(name, about){
     api.editProfile(name, about).then((data)=>{
       setcurrentUser(data);
@@ -90,11 +99,12 @@ function App() {
         }).catch((err) => { 
             console.log(err);
             alert(err);
-          }).finally(()=>{closeAllPopups()})
+          })
       }).catch((err) => { 
           console.log(err);
           alert(err);
-        }).finally(()=>{closeAllPopups()})   
+        })
+        .finally(()=>{setLoading(false)})   
     },[])
 
 function handleCardLike(card) {
@@ -136,6 +146,9 @@ function handleAddPlaceSubmit(name, link){
 }
 
   return (
+    //show loading message if user and cards are not loaded
+  loading ? <div className="App page loading">Loading page...</div> :
+
 <div className="App page">
 <CurrentUserContext.Provider value={currentUser}>
   <Header />

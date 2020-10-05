@@ -20,11 +20,17 @@ function Main(props) {
   </section>
 
   <section className="elements">
-    {props.cards.map(card => (
+    {props.cards.length > 0 ?
+     props.cards.map(card => (
       <div className="element" key={card._id}>
         <Card card={card} onCardClick = {props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>
       </div>
-    ))}
+    ))
+    
+    :
+    //show loading screen if cards haven't loaded
+    <div className="loading">Loading cards...</div>
+    }
   </section>
   </>
 )}
