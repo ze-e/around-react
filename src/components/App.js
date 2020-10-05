@@ -55,7 +55,7 @@ function App() {
   }
 
   function handleKeyPress(e){
-    console.log(e.key);
+    console.log(e);
     if(e.key === 'Escape'){
       closeAllPopups();
     }
