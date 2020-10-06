@@ -12,7 +12,7 @@ import DeletePopup from './DeletePopup';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 //util
 import {api} from '../utils/api';
-import {formValidator} from '../utils/formValidator'
+import {formValidator} from '../utils/formvalidator'
 
 function App() {
   const [selectedCard, setselectedCard] = React.useState({link:'#'});
@@ -131,6 +131,23 @@ function App() {
       closeAllPopups(); 
     } 
   } 
+
+  //close window when escape is pressed
+  const handleUserKeyPress = React.useCallback((e) => {
+      if(e.key === 'Escape'){ 
+        closeAllPopups(); 
+      } 
+    }, []);
+
+//add Escape event
+React.useEffect(() => {
+    window.addEventListener('keydown', handleUserKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleUserKeyPress);
+    };
+  }, [handleUserKeyPress]);
+
+
 
     //get user and initial cards
     React.useEffect(()=>{
