@@ -23,20 +23,20 @@ This project was created based on a design made in Figma:
 
 Some of the skills used to build this project were:
 HTML:
--Descriptive html tags to maximize seo
+* Descriptive html tags to maximize seo
 
 CSS:
--BEM file structure
+* BEM file structure
 
 js:
--ES10 javascript syntax
--asynchronous functions and communicating with apis
+* ES10 javascript syntax
+* asynchronous functions and communicating with apis
 
 React:
--hooks
--React-context
+* hooks
+* React-context
 
 Other:
--NPM
--webpack
--babel
+* NPM
+* webpack
+* babel
