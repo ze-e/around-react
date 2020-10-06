@@ -124,16 +124,8 @@ function App() {
     }
   }
 
-  //click esc to close
-  function handleKeyPress(e){ 
-    console.log(e); 
-    if(e.key === 'Escape'){ 
-      closeAllPopups(); 
-    } 
-  } 
-
   //close window when escape is pressed
-  const handleUserKeyPress = React.useCallback((e) => {
+  const handleKeyPress = React.useCallback((e) => {
       if(e.key === 'Escape'){ 
         closeAllPopups(); 
       } 
@@ -141,13 +133,11 @@ function App() {
 
 //add Escape event
 React.useEffect(() => {
-    window.addEventListener('keydown', handleUserKeyPress);
+    window.addEventListener('keydown', handleKeyPress);
     return () => {
-      window.removeEventListener('keydown', handleUserKeyPress);
+      window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [handleUserKeyPress]);
-
-
+  }, [handleKeyPress]);
 
     //get user and initial cards
     React.useEffect(()=>{
