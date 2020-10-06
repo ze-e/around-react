@@ -29,9 +29,12 @@ CSS:
 -BEM file structure
 
 js:
--React frontend library
 -ES10 javascript syntax
 -asynchronous functions and communicating with apis
+
+React:
+-hooks
+-React-context
 
 Other:
 -NPM
